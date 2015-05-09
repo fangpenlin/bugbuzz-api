@@ -4,8 +4,7 @@ import urllib
 
 def test_event_reading(testapp, session, session2):
     # Create other events, ensure we will get only events for our own session
-    sid2 = session['id']
-    testapp.post('/sessions/{}/actions/{}'.format(sid2, 'next'))
+    testapp.post('/sessions/{}/actions/{}'.format(session2['id'], 'next'))
 
     sid = session['id']
     created_events = []

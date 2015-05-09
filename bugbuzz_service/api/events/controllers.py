@@ -17,7 +17,7 @@ class EventIndexController(ControllerBase):
 
     @view_config(request_method='GET')
     def get(self):
-        query = models.Event.query.order_by(models.Event.created_at.asc())
+        query = self.context.entity.events
         events = []
         last_timestamp = self.request.params.get('last_timestamp')
         if last_timestamp is not None:
@@ -25,5 +25,5 @@ class EventIndexController(ControllerBase):
             # it's possible we will miss some event
             last_timestamp = dateutil.parser.parse(last_timestamp)
             query = query.filter(models.Event.created_at > last_timestamp)
-        events = query.all()
+        events = query.order_by(models.Event.created_at).all()
         return dict(events=events)

@@ -15,7 +15,7 @@ class Session(Base):
         lazy='dynamic',
         backref='session',
         cascade='all, delete-orphan',
-        order_by='Event.created_at.desc()',
+        order_by='Event.created_at.asc()',
     )
 
     @classmethod
