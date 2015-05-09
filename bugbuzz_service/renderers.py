@@ -18,7 +18,7 @@ def event_adapter(event, request):
     return dict(
         id=event.guid,
         type=event.type,
-        parameters=event.parameters,
+        params=event.params,
         created_at=event.created_at.isoformat(),
         updated_at=event.created_at.isoformat(),
     )

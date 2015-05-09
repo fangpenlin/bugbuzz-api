@@ -24,7 +24,7 @@ events = Table(
     # type of this event
     Column('type', Unicode, nullable=False),
     # parameters for this event
-    Column('parameters', JSON),
+    Column('params', JSON),
     Column('created_at', UTCDateTime, default=now_func),
     Column(
         'updated_at',

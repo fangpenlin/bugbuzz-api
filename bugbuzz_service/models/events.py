@@ -9,8 +9,8 @@ class Event(Base):
     __table__ = tables.events
 
     @classmethod
-    def create(cls, session, type, parameters=None):
-        event = cls(session=session, type=type, parameters=parameters)
+    def create(cls, session, type, params=None):
+        event = cls(session=session, type=type, params=params)
         DBSession.add(event)
         DBSession.flush()
         return event

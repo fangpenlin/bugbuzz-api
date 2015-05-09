@@ -29,11 +29,26 @@ class SessionIndexController(ControllerBase):
 )
 class SessionActionController(ControllerBase):
 
-    @view_config(name='next', request_method='POST')
-    def next_post(self):
+    def _command_post(self, command):
         with db_transaction():
             event = models.Event.create(
                 session=self.context.entity,
-                type='next',
+                type=command,
+                params=(
+                    dict(self.request.POST)
+                    if self.request.POST is not None else None
+                ),
             )
         return event
+
+    @view_config(name='next', request_method='POST')
+    def next_post(self):
+        return self._command_post('next')
+
+    @view_config(name='step', request_method='POST')
+    def step_post(self):
+        return self._command_post('step')
+
+    @view_config(name='continue', request_method='POST')
+    def continue_post(self):
+        return self._command_post('continue')
