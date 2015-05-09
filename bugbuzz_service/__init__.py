@@ -18,7 +18,7 @@ def main(global_config, **settings):
     app_settings.update(settings)
 
     # setup database
-    pp_settings = setup_database(global_config, **app_settings)
+    app_settings = setup_database(global_config, **app_settings)
     config = Configurator(
         settings=app_settings,
     )
