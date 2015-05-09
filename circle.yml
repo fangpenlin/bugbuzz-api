@@ -5,8 +5,7 @@ machine:
     - postgresql
 
 dependencies:
-  pre:
-    - pip install PIL --allow-external PIL --allow-unverified PIL
+  override:
     - 'easy_install -U setuptools'
     - 'pip install -U pip'
     - 'pip install psycopg2'
