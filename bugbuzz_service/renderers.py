@@ -6,11 +6,21 @@ from pyramid.settings import asbool
 from . import models
 
 
-def debug_session_adapter(debug_session, request):
+def session_adapter(session, request):
     return dict(
-        id=debug_session.guid,
-        created_at=debug_session.created_at.isoformat(),
-        updated_at=debug_session.created_at.isoformat(),
+        id=session.guid,
+        created_at=session.created_at.isoformat(),
+        updated_at=session.created_at.isoformat(),
+    )
+
+
+def event_adapter(event, request):
+    return dict(
+        id=event.guid,
+        type=event.type,
+        parameters=event.parameters,
+        created_at=event.created_at.isoformat(),
+        updated_at=event.created_at.isoformat(),
     )
 
 
@@ -29,5 +39,6 @@ def includeme(config):
         kwargs = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
     json_renderer = JSON(**kwargs)
-    json_renderer.add_adapter(models.DebugSession, debug_session_adapter)
+    json_renderer.add_adapter(models.Session, session_adapter)
+    json_renderer.add_adapter(models.Event, event_adapter)
     config.add_renderer('json', json_renderer)

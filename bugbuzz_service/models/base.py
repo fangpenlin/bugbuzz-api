@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from sqlalchemy.ext.declarative import declarative_base
 
-from ..db import Session
+from ..db import DBSession
 
 
 class Model(object):
@@ -16,4 +16,4 @@ class Model(object):
 
 
 Base = declarative_base(cls=Model)
-Base.query = Session.query_property()
+Base.query = DBSession.query_property()

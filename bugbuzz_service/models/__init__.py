@@ -5,7 +5,7 @@ import pytz
 from sqlalchemy import engine_from_config
 
 from ..db import tables
-from ..db import Session
+from ..db import DBSession
 
 
 def setup_database(global_config, **settings):
@@ -25,7 +25,7 @@ def setup_database(global_config, **settings):
                 connect_args=connect_args,
             )
         )
-    Session.bind = settings['engine']
+    DBSession.bind = settings['engine']
     tables.metadata.bind = settings['engine']
 
     def now_func():
@@ -35,4 +35,5 @@ def setup_database(global_config, **settings):
     tables.set_now_func(now_func)
     return settings
 
-from .debug_sessions import DebugSession  # noqa
+from .sessions import Session  # noqa
+from .events import Event  # noqa

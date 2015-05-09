@@ -40,4 +40,5 @@ def now_func():
             return dt.replace(tzinfo=pytz.utc)
     return dt
 
-from .debug_sessions import debug_sessions  # noqa
+from .sessions import sessions  # noqa
+from .events import events  # noqa

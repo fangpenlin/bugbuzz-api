@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from .debug_sessions.resources import DebugSessionIndexResource
+from .sessions.resources import SessionIndexResource
 
 
 class RootResource(object):
@@ -9,7 +9,7 @@ class RootResource(object):
     def __init__(self, request):
         self.request = request
         self.endpoint_map = {
-            'debug-sessions': DebugSessionIndexResource,
+            'sessions': SessionIndexResource,
         }
 
     def __getitem__(self, key):

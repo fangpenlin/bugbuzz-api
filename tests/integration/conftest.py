@@ -6,7 +6,7 @@ from webtest import TestApp
 
 from bugbuzz_service import main
 from bugbuzz_service.db.tables import metadata
-from bugbuzz_service.db import Session
+from bugbuzz_service.db import DBSession
 from bugbuzz_service import models
 
 
@@ -23,8 +23,9 @@ def database(settings=None):
     metadata.bind = app_settings['engine']
     metadata.create_all()
     yield app_settings
-    Session.close()
-    Session.remove()
+    DBSession.close()
+    DBSession.remove()
+    metadata.drop_all()
 
 
 @pytest.fixture

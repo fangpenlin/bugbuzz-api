@@ -7,7 +7,7 @@ from sqlalchemy.orm import scoped_session
 from zope.sqlalchemy import ZopeTransactionExtension
 
 
-Session = scoped_session(sessionmaker(
+DBSession = scoped_session(sessionmaker(
     extension=ZopeTransactionExtension(keep_session=True),
 ))
 
@@ -16,4 +16,4 @@ Session = scoped_session(sessionmaker(
 def db_transaction():
     with transaction.manager:
         yield
-        Session.flush()
+        DBSession.flush()
