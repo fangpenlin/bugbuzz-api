@@ -1,0 +1,19 @@
+machine:
+  python:
+    version: python2.7
+
+ependencies:
+  pre:
+    - pip install PIL --allow-external PIL --allow-unverified PIL
+    - 'easy_install -U setuptools'
+    - 'pip install -U pip'
+    - 'pip install psycopg2'
+    - 'pip install -e .[tests]'
+  post:
+    - "psql -c 'CREATE DATABASE bugbuzz;' -U postgres"
+
+test:
+  override:
+    - 'py.test -svvv --cov-report term-missing --cov bugbuzz tests'
+    - 'pip install flake8 --use-mirrors'
+    - 'flake8 bugbuzz --ignore=E501,W293'
