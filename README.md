@@ -1,2 +1,2 @@
-# bugbuzz-server
+# bugbuzz-api
 Bugbuzz HTTP API server
