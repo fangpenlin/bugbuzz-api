@@ -5,8 +5,8 @@ from setuptools import setup, find_packages
 
 version = '0.0.0'
 try:
-    import gf_world
-    version = gf_world.__version__
+    import bugbuzz_service
+    version = bugbuzz_service.__version__
 except ImportError:
     pass
 
@@ -23,7 +23,7 @@ tests_require = [
 ]
 
 setup(
-    name='bugbuzz-api',
+    name='bugbuzz-service',
     version=version,
     packages=find_packages(exclude=('tests', )),
     install_requires=[
@@ -40,7 +40,8 @@ setup(
         'alembic>=0.7,<0.8',
         'psycopg2>=2.6,<2.7',
         'pyramid-handy>=0.1.1,<0.2',
-        'dateutils>=2.4.2,<2.5',
+        'dateutils',
+        'paste>=2.0.1,<2.1',  # for dev translogger only
     ],
     extras_require=dict(
         tests=tests_require,
@@ -48,8 +49,8 @@ setup(
     tests_require=tests_require,
     entry_points="""\
     [paste.app_factory]
-    main = bugbuzz_api:main
+    main = bugbuzz_service:main
     [console_scripts]
-    bbapi = bugbuzz_api.scripts.__main__:main
+    bbapi = bugbuzz_service.scripts.__main__:main
     """,
 )
