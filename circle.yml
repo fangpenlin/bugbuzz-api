@@ -17,4 +17,4 @@ test:
   override:
     - 'py.test -svvv --cov-report term-missing --cov bugbuzz tests'
     - 'pip install flake8 --use-mirrors'
-    - 'flake8 bugbuzz --ignore=E501,W293'
+    - 'flake8 bugbuzz_service --ignore=E501,W293'
