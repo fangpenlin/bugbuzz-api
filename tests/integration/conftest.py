@@ -45,3 +45,11 @@ def session(testapp):
         '/sessions',
     )
     return resp.json
+
+
+@pytest.fixture
+def session2(testapp):
+    resp = testapp.post(
+        '/sessions',
+    )
+    return resp.json

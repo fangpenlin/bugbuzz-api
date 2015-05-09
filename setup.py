@@ -51,6 +51,6 @@ setup(
     [paste.app_factory]
     main = bugbuzz_service:main
     [console_scripts]
-    bbapi = bugbuzz_service.scripts.__main__:main
+    bugbuzz_service = bugbuzz_service.scripts.__main__:main
     """,
 )
