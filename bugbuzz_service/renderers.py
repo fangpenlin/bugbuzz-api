@@ -10,7 +10,7 @@ def session_adapter(session, request):
     return dict(
         id=session.guid,
         created_at=session.created_at.isoformat(),
-        updated_at=session.created_at.isoformat(),
+        updated_at=session.updated_at.isoformat(),
     )
 
 
@@ -20,7 +20,7 @@ def event_adapter(event, request):
         type=event.type,
         params=event.params,
         created_at=event.created_at.isoformat(),
-        updated_at=event.created_at.isoformat(),
+        updated_at=event.updated_at.isoformat(),
     )
 
 

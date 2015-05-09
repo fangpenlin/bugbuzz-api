@@ -37,3 +37,11 @@ def testapp(database, settings=None):
     app = main({}, **app_settings)
     testapp = TestApp(app)
     return testapp
+
+
+@pytest.fixture
+def session(testapp):
+    resp = testapp.post(
+        '/sessions',
+    )
+    return resp.json

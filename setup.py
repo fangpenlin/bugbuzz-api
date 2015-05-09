@@ -40,6 +40,7 @@ setup(
         'alembic>=0.7,<0.8',
         'psycopg2>=2.6,<2.7',
         'pyramid-handy>=0.1.1,<0.2',
+        'dateutils>=2.4.2,<2.5',
     ],
     extras_require=dict(
         tests=tests_require,

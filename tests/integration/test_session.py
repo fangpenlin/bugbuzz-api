@@ -3,14 +3,6 @@ from __future__ import unicode_literals
 import pytest
 
 
-@pytest.fixture
-def session(testapp):
-    resp = testapp.post(
-        '/sessions',
-    )
-    return resp.json
-
-
 def test_create_session(testapp):
     resp = testapp.post(
         '/sessions',
