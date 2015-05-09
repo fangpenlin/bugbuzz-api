@@ -4,7 +4,7 @@ machine:
   services:
     - postgresql
 
-ependencies:
+dependencies:
   pre:
     - pip install PIL --allow-external PIL --allow-unverified PIL
     - 'easy_install -U setuptools'
