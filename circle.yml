@@ -1,6 +1,8 @@
 machine:
   python:
     version: python2.7
+  services:
+    - postgresql
 
 ependencies:
   pre:
