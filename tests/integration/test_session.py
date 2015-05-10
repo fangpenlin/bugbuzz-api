@@ -10,7 +10,7 @@ def test_create_session(testapp):
 
 def test_get_session(testapp, session):
     resp = testapp.get('/sessions/{}'.format(session['id']))
-    assert resp.json == session
+    assert resp.json == dict(session=session)
 
 
 @pytest.mark.parametrize('command, params', [

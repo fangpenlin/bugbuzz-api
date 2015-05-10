@@ -26,7 +26,7 @@ class SessionController(ControllerBase):
 
     @view_config(request_method='GET')
     def get(self):
-        return self.context.entity
+        return dict(session=self.context.entity)
 
 
 @view_defaults(context=SessionActionResource)
