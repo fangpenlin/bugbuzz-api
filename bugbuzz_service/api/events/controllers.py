@@ -2,17 +2,14 @@ from __future__ import unicode_literals
 
 import dateutil.parser
 from pyramid.view import view_config
-from pyramid.view import view_defaults
 
 from ... import models
 from ..base import ControllerBase
+from ..base import view_defaults
 from .resources import EventIndexResource
 
 
-@view_defaults(
-    context=EventIndexResource,
-    renderer='json',
-)
+@view_defaults(context=EventIndexResource)
 class EventIndexController(ControllerBase):
 
     @view_config(request_method='GET')

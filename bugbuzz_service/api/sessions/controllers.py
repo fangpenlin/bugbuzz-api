@@ -1,19 +1,17 @@
 from __future__ import unicode_literals
 
 from pyramid.view import view_config
-from pyramid.view import view_defaults
 
 from ... import models
 from ...db import db_transaction
 from ..base import ControllerBase
+from ..base import view_defaults
 from .resources import SessionIndexResource
+from .resources import SessionResource
 from .resources import SessionActionResource
 
 
-@view_defaults(
-    context=SessionIndexResource,
-    renderer='json',
-)
+@view_defaults(context=SessionIndexResource)
 class SessionIndexController(ControllerBase):
 
     @view_config(request_method='POST')
@@ -23,10 +21,15 @@ class SessionIndexController(ControllerBase):
         return session
 
 
-@view_defaults(
-    context=SessionActionResource,
-    renderer='json',
-)
+@view_defaults(context=SessionResource)
+class SessionController(ControllerBase):
+
+    @view_config(request_method='GET')
+    def get(self):
+        return self.context.entity
+
+
+@view_defaults(context=SessionActionResource)
 class SessionActionController(ControllerBase):
 
     def _command_post(self, command):

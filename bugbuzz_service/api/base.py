@@ -1,4 +1,7 @@
 from __future__ import unicode_literals
+import functools
+
+from pyramid import view
 
 
 class ResourceBase(object):
@@ -16,3 +19,6 @@ class ControllerBase(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+
+
+view_defaults = functools.partial(view.view_defaults, renderer='json')

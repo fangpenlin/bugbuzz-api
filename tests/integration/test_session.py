@@ -4,10 +4,13 @@ import pytest
 
 
 def test_create_session(testapp):
-    resp = testapp.post(
-        '/sessions',
-    )
+    resp = testapp.post('/sessions')
     assert resp.json['id'].startswith('SE')
+
+
+def test_get_session(testapp, session):
+    resp = testapp.get('/sessions/{}'.format(session['id']))
+    assert resp.json == session
 
 
 @pytest.mark.parametrize('command, params', [
