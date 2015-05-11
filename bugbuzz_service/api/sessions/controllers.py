@@ -18,6 +18,7 @@ class SessionIndexController(ControllerBase):
     def post(self):
         with db_transaction():
             session = models.Session.create()
+        self.request.response.status = '201 Created'
         return session
 
 

@@ -10,7 +10,8 @@ def test_create_break(testapp, session):
             lineno=123,
             # TODO: break types?
             # TODO: other info
-        )
+        ),
+        status=201,
     )
     assert resp.json['id'].startswith('BK')
     assert resp.json['filename'] == 'foobar.py'

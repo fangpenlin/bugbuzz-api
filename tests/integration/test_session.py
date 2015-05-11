@@ -4,7 +4,7 @@ import pytest
 
 
 def test_create_session(testapp):
-    resp = testapp.post('/sessions')
+    resp = testapp.post('/sessions', status=201)
     assert resp.json['id'].startswith('SE')
 
 
