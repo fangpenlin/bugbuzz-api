@@ -42,6 +42,7 @@ setup(
         'pyramid-handy>=0.1.1,<0.2',
         'dateutils',
         'paste>=2.0.1,<2.1',  # for dev translogger only
+        'pubnub>=3.7.1,<3.8',
     ],
     extras_require=dict(
         tests=tests_require,
