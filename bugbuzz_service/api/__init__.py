@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 from .sessions.resources import SessionIndexResource
+from .breaks.resources import BreakIndexResource
+from .files.resources import FileIndexResource
 
 
 class RootResource(object):
@@ -10,6 +12,8 @@ class RootResource(object):
         self.request = request
         self.endpoint_map = {
             'sessions': SessionIndexResource,
+            'breaks': BreakIndexResource,
+            'files': FileIndexResource,
         }
 
     def __getitem__(self, key):

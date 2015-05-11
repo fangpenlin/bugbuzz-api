@@ -8,6 +8,7 @@ from ...renderers import break_adapter
 from ..base import ControllerBase
 from ..base import view_defaults
 from .resources import BreakIndexResource
+from .resources import BreakResource
 
 
 @view_defaults(context=BreakIndexResource)
@@ -27,4 +28,12 @@ class BreakIndexController(ControllerBase):
             {'break': break_adapter(break_, self.request)},
         )
         self.request.response.status = '201 Created'
-        return break_
+        return {'break': break_}
+
+
+@view_defaults(context=BreakResource)
+class BreakController(ControllerBase):
+
+    @view_config(request_method='GET')
+    def get(self):
+        return {'break': self.context.entity}

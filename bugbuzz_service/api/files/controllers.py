@@ -8,6 +8,7 @@ from ...renderers import file_adapter
 from ..base import ControllerBase
 from ..base import view_defaults
 from .resources import FileIndexResource
+from .resources import FileResource
 
 
 @view_defaults(context=FileIndexResource)
@@ -29,3 +30,11 @@ class FileIndexController(ControllerBase):
         )
         self.request.response.status = '201 Created'
         return dict(file=file_)
+
+
+@view_defaults(context=FileResource)
+class FileController(ControllerBase):
+
+    @view_config(request_method='GET')
+    def get(self):
+        return dict(file=self.context.entity)
