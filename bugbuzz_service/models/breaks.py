@@ -9,8 +9,8 @@ class Break(Base):
     __table__ = tables.breaks
 
     @classmethod
-    def create(cls, session, filename, lineno):
-        break_ = cls(session=session, filename=filename, lineno=lineno)
+    def create(cls, session, file_, lineno):
+        break_ = cls(session=session, file=file_, lineno=lineno)
         DBSession.add(break_)
         DBSession.flush()
         return break_

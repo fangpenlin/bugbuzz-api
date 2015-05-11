@@ -12,6 +12,6 @@ def test_create_file(testapp, session):
         ),
         status=201,
     )
-    assert resp.json['id'].startswith('FL')
-    assert resp.json['filename'] == 'foobar.py'
-    assert resp.json['content'].decode('base64') == 'print 123'
+    assert resp.json['file']['id'].startswith('FL')
+    assert resp.json['file']['filename'] == 'foobar.py'
+    assert resp.json['file']['content'].decode('base64') == 'print 123'

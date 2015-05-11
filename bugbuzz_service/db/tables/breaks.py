@@ -21,8 +21,11 @@ breaks = Table(
         ondelete='CASCADE',
         onupdate='CASCADE',
     ), nullable=False, index=True),
-    # filename for current break
-    Column('filename', Unicode, nullable=False),
+    Column('file_guid', Unicode(64), ForeignKey(
+        'files.guid',
+        ondelete='CASCADE',
+        onupdate='CASCADE',
+    ), nullable=False, index=True),
     # lineno for current break
     Column('lineno', Integer, nullable=False),
     # TODO: call stack (frames)

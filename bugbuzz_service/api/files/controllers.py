@@ -28,4 +28,4 @@ class FileIndexController(ControllerBase):
             dict(file=file_adapter(file_, self.request)),
         )
         self.request.response.status = '201 Created'
-        return file_
+        return dict(file=file_)

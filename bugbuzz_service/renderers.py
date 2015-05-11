@@ -28,7 +28,7 @@ def event_adapter(event, request):
 def break_adapter(break_, request):
     return dict(
         id=break_.guid,
-        filename=break_.filename,
+        file=dict(id=break_.file.guid),
         lineno=break_.lineno,
         created_at=break_.created_at.isoformat(),
         updated_at=break_.updated_at.isoformat(),
