@@ -94,7 +94,7 @@ def cli(ctx, log_level, conf_file, version):
     ctx.obj['settings'] = settings
 
     if version:
-        click.echo(bugbuzz.__version__)
+        click.echo(bugbuzz_service.__version__)
         return
     if ctx.invoked_subcommand is None:
         click.echo(ctx.get_help(), err=True)
