@@ -9,6 +9,7 @@ from . import models
 def session_adapter(session, request):
     return dict(
         id=session.guid,
+        href='/sessions/{}'.format(session.guid),
         created_at=session.created_at.isoformat(),
         updated_at=session.updated_at.isoformat(),
     )
