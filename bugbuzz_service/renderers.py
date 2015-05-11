@@ -28,7 +28,8 @@ def event_adapter(event, request):
 def break_adapter(break_, request):
     return dict(
         id=break_.guid,
-        file=dict(id=break_.file.guid),
+        session=break_.session.guid,
+        file=break_.file.guid,
         lineno=break_.lineno,
         created_at=break_.created_at.isoformat(),
         updated_at=break_.updated_at.isoformat(),
@@ -38,6 +39,7 @@ def break_adapter(break_, request):
 def file_adapter(file_, request):
     return dict(
         id=file_.guid,
+        session=file_.session.guid,
         filename=file_.filename,
         mime_type=file_.mime_type,
         content=file_.content.encode('base64'),

@@ -26,7 +26,7 @@ def test_create_break(testapp, session):
         status=201,
     )
     assert resp.json['break']['id'].startswith('BK')
-    assert resp.json['break']['file']['id'] == file_id
+    assert resp.json['break']['file'] == file_id
     assert resp.json['break']['lineno'] == 123
 
 
