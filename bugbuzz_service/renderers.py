@@ -25,6 +25,16 @@ def event_adapter(event, request):
     )
 
 
+def break_adapter(break_, request):
+    return dict(
+        id=break_.guid,
+        filename=break_.filename,
+        lineno=break_.lineno,
+        created_at=break_.created_at.isoformat(),
+        updated_at=break_.updated_at.isoformat(),
+    )
+
+
 def enum_symbol(enum_value):
     if enum_value is None:
         return enum_value
@@ -42,4 +52,5 @@ def includeme(config):
     json_renderer = JSON(**kwargs)
     json_renderer.add_adapter(models.Session, session_adapter)
     json_renderer.add_adapter(models.Event, event_adapter)
+    json_renderer.add_adapter(models.Break, break_adapter)
     config.add_renderer('json', json_renderer)

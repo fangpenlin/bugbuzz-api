@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from ... import models
 from ..events.resources import EventIndexResource
+from ..breaks.resources import BreakIndexResource
 from ..base import ResourceBase
 
 
@@ -30,6 +31,13 @@ class SessionResource(ResourceBase):
             )
         elif key == 'events':
             return EventIndexResource(
+                self.request,
+                parent=self,
+                name=key,
+                entity=self.entity,
+            )
+        elif key == 'breaks':
+            return BreakIndexResource(
                 self.request,
                 parent=self,
                 name=key,
