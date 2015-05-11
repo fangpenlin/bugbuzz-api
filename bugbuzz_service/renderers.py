@@ -35,6 +35,17 @@ def break_adapter(break_, request):
     )
 
 
+def file_adapter(file_, request):
+    return dict(
+        id=file_.guid,
+        filename=file_.filename,
+        mime_type=file_.mime_type,
+        content=file_.content.encode('base64'),
+        created_at=file_.created_at.isoformat(),
+        updated_at=file_.updated_at.isoformat(),
+    )
+
+
 def enum_symbol(enum_value):
     if enum_value is None:
         return enum_value
@@ -53,4 +64,5 @@ def includeme(config):
     json_renderer.add_adapter(models.Session, session_adapter)
     json_renderer.add_adapter(models.Event, event_adapter)
     json_renderer.add_adapter(models.Break, break_adapter)
+    json_renderer.add_adapter(models.File, file_adapter)
     config.add_renderer('json', json_renderer)

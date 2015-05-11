@@ -15,25 +15,15 @@ class BreakIndexController(ControllerBase):
 
     @view_config(request_method='POST')
     def post(self):
-        settings = self.request.registry.settings
         with db_transaction():
             break_ = models.Break.create(
                 session=self.context.entity,
                 filename=self.request.params['filename'],
                 lineno=self.request.params['lineno'],
             )
-        # XXX:
-        import socket
-        socket.TCP_KEEPINTVL = 0x101
-        socket.TCP_KEEPCNT = 0x102
-        from Pubnub import Pubnub
-        # TODO: move to base controller?
-        pubnub = Pubnub(
-            publish_key=settings['pubnub.publish_key'],
-            subscribe_key=settings['pubnub.subscribe_key'],
+        self.publish_event(
+            break_.session.guid,
+            {'break': break_adapter(break_, self.request)},
         )
-        # TODO: move this to model?
-        # TODO: publish to a hashed channel name?
-        pubnub.publish(break_.session.guid, break_adapter(break_, self.request))
         self.request.response.status = '201 Created'
         return break_

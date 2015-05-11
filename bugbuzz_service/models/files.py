@@ -9,8 +9,13 @@ class File(Base):
     __table__ = tables.files
 
     @classmethod
-    def create(cls, session, filename, content):
-        file_ = cls(session=session, filename=filename, content=content)
+    def create(cls, session, filename, mime_type, content):
+        file_ = cls(
+            session=session,
+            filename=filename,
+            mime_type=mime_type,
+            content=content,
+        )
         DBSession.add(file_)
         DBSession.flush()
         return file_

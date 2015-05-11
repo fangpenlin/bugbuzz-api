@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from sqlalchemy import Column
 from sqlalchemy import Unicode
+from sqlalchemy import UnicodeText
 from sqlalchemy import Table
 from sqlalchemy.schema import ForeignKey
 
@@ -22,8 +23,11 @@ files = Table(
     ), nullable=False, index=True),
     # name of file
     Column('filename', Unicode, nullable=False),
+    # mime type of file
+    Column('mime_type', Unicode, nullable=False),
+    # TODO: save in amazon S3 instead?
     # file content
-    Column('content', Unicode, nullable=False),
+    Column('content', UnicodeText, nullable=False),
     # TODO: add a hash column for querying files?
     Column('created_at', UTCDateTime, default=now_func),
     Column(
