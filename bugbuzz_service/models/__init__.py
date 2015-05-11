@@ -38,3 +38,4 @@ def setup_database(global_config, **settings):
 from .sessions import Session  # noqa
 from .events import Event  # noqa
 from .breaks import Break  # noqa
+from .files import File  # noqa

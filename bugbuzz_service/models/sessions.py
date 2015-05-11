@@ -26,6 +26,14 @@ class Session(Base):
         order_by='Break.created_at.asc()',
     )
 
+    files = relationship(
+        'File',
+        lazy='dynamic',
+        backref='session',
+        cascade='all, delete-orphan',
+        order_by='File.created_at.asc()',
+    )
+
     @classmethod
     def create(cls):
         session = cls()

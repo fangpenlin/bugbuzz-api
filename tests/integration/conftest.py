@@ -32,6 +32,8 @@ def database(settings=None):
 def testapp(database, settings=None):
     app_settings = settings or {
         'db_session_cleanup': False,
+        'pubnub.publish_key': 'DUMMY_PUB_KEY',
+        'pubnub.subscribe_key': 'DUMMY_SUB_KEY',
     }
     app_settings.update(database)
     app = main({}, **app_settings)

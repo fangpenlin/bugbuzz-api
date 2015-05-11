@@ -43,3 +43,4 @@ def now_func():
 from .sessions import sessions  # noqa
 from .events import events  # noqa
 from .breaks import breaks  # noqa
+from .files import files  # noqa
