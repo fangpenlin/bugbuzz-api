@@ -45,6 +45,10 @@ class SessionActionController(ControllerBase):
             )
         return event
 
+    @view_config(name='return', request_method='POST')
+    def return_post(self):
+        return self._command_post('return')
+
     @view_config(name='next', request_method='POST')
     def next_post(self):
         return self._command_post('next')
