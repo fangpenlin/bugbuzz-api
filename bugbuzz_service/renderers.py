@@ -44,7 +44,7 @@ def file_adapter(file_, request):
         session=file_.session.guid,
         filename=file_.filename,
         mime_type=file_.mime_type,
-        content=file_.content.encode('base64'),
+        content=file_.content.encode('utf8').encode('base64'),
         created_at=file_.created_at.isoformat(),
         updated_at=file_.updated_at.isoformat(),
     )
