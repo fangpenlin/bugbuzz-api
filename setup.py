@@ -43,6 +43,7 @@ setup(
         'dateutils',
         'paste>=2.0.1,<2.1',  # for dev translogger only
         'pubnub>=3.7.1,<3.8',
+        'raven>=5.1.1,<6.0',
     ],
     extras_require=dict(
         tests=tests_require,
