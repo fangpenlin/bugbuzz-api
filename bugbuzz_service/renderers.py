@@ -12,6 +12,8 @@ def session_adapter(session, request):
         href='/sessions/{}'.format(session.guid),
         created_at=session.created_at.isoformat(),
         updated_at=session.updated_at.isoformat(),
+        files=[file.guid for file in session.files],
+        breaks=[break_.guid for break_ in session.breaks],
     )
 
 
