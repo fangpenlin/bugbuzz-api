@@ -37,6 +37,7 @@ def break_adapter(break_, request):
         session=break_.session.guid,
         file=break_.file.guid,
         lineno=break_.lineno,
+        local_vars=break_.local_vars,
         created_at=break_.created_at.isoformat(),
         updated_at=break_.updated_at.isoformat(),
     )

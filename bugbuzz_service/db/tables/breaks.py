@@ -5,6 +5,7 @@ from sqlalchemy import Unicode
 from sqlalchemy import Integer
 from sqlalchemy import Table
 from sqlalchemy.schema import ForeignKey
+from sqlalchemy.dialects.postgresql import JSON
 
 from ...utils import GUIDFactory
 from .utc_dt import UTCDateTime
@@ -28,6 +29,7 @@ breaks = Table(
     ), nullable=False, index=True),
     # lineno for current break
     Column('lineno', Integer, nullable=False),
+    Column('local_vars', JSON, nullable=False),
     # TODO: call stack (frames)
     # TODO: variables
     Column('created_at', UTCDateTime, default=now_func),

@@ -17,11 +17,12 @@ class BreakIndexController(ControllerBase):
     @view_config(request_method='POST')
     def post(self):
         with db_transaction():
-            file_ = models.File.query.get(self.request.params['file_id'])
+            file_ = models.File.query.get(self.request.json['file_id'])
             break_ = models.Break.create(
                 session=self.context.entity,
                 file_=file_,
-                lineno=self.request.params['lineno'],
+                lineno=self.request.json['lineno'],
+                local_vars=self.request.json['local_vars'],
             )
         self.publish_event(
             break_.session.dashboard_channel_id,

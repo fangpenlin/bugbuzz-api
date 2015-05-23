@@ -15,19 +15,25 @@ def test_create_break(testapp, session):
     )
     file_id = resp.json['file']['id']
 
-    resp = testapp.post(
+    resp = testapp.post_json(
         '/sessions/{}/breaks'.format(sid),
         dict(
             lineno=123,
             file_id=file_id,
-            # TODO: break types?
-            # TODO: other info
+            local_vars=dict(
+                foo='bar',
+                eggs='spam',
+            ),
         ),
         status=201,
     )
     assert resp.json['break']['id'].startswith('BK')
     assert resp.json['break']['file'] == file_id
     assert resp.json['break']['lineno'] == 123
+    assert resp.json['break']['local_vars'] == dict(
+        foo='bar',
+        eggs='spam',
+    )
 
 
 def test_get_break(testapp, session):
@@ -42,13 +48,15 @@ def test_get_break(testapp, session):
     )
     file_id = resp.json['file']['id']
 
-    resp = testapp.post(
+    resp = testapp.post_json(
         '/sessions/{}/breaks'.format(sid),
         dict(
             lineno=123,
             file_id=file_id,
-            # TODO: break types?
-            # TODO: other info
+            local_vars=dict(
+                foo='bar',
+                eggs='spam',
+            ),
         ),
         status=201,
     )
