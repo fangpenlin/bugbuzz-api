@@ -7,9 +7,13 @@ from . import models
 
 
 def session_adapter(session, request):
+    settings = request.registry.settings
     return dict(
         id=session.guid,
         href='/sessions/{}'.format(session.guid),
+        pubnub_subscribe_key=settings['pubnub.subscribe_key'],
+        client_channel=session.client_channel_id,
+        dashboard_channel=session.dashboard_channel_id,
         created_at=session.created_at.isoformat(),
         updated_at=session.updated_at.isoformat(),
         files=[file.guid for file in session.files],

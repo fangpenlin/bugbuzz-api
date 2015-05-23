@@ -4,6 +4,7 @@ from pyramid.view import view_config
 
 from ... import models
 from ...db import db_transaction
+from ...renderers import event_adapter
 from ..base import ControllerBase
 from ..base import view_defaults
 from .resources import SessionIndexResource
@@ -19,7 +20,7 @@ class SessionIndexController(ControllerBase):
         with db_transaction():
             session = models.Session.create()
         self.request.response.status = '201 Created'
-        return session
+        return dict(session=session)
 
 
 @view_defaults(context=SessionResource)
@@ -43,6 +44,10 @@ class SessionActionController(ControllerBase):
                     if self.request.POST is not None else None
                 ),
             )
+        self.publish_event(
+            self.context.entity.client_channel_id,
+            {'event': event_adapter(event, self.request)},
+        )
         return event
 
     @view_config(name='return', request_method='POST')

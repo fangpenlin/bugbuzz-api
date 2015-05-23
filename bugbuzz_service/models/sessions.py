@@ -40,3 +40,19 @@ class Session(Base):
         DBSession.add(session)
         DBSession.flush()
         return session
+
+    @property
+    def client_channel_id(self):
+        """ID of event channel for debugging client
+
+        """
+        # TODO: use hash with secret here
+        return 'client-{}'.format(self.guid)
+
+    @property
+    def dashboard_channel_id(self):
+        """ID of event channel for dashboard
+
+        """
+        # TODO: use hash with secret here
+        return 'dashboard-{}'.format(self.guid)

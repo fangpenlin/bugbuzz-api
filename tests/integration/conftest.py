@@ -46,7 +46,7 @@ def session(testapp):
     resp = testapp.post(
         '/sessions',
     )
-    return resp.json
+    return resp.json['session']
 
 
 @pytest.fixture
@@ -54,4 +54,4 @@ def session2(testapp):
     resp = testapp.post(
         '/sessions',
     )
-    return resp.json
+    return resp.json['session']

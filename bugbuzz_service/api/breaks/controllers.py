@@ -24,7 +24,7 @@ class BreakIndexController(ControllerBase):
                 lineno=self.request.params['lineno'],
             )
         self.publish_event(
-            break_.session.guid,
+            break_.session.dashboard_channel_id,
             {'break': break_adapter(break_, self.request)},
         )
         self.request.response.status = '201 Created'
