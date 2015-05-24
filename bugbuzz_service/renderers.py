@@ -15,6 +15,15 @@ def session_adapter(session, request):
         pubnub_subscribe_key=settings['pubnub.subscribe_key'],
         client_channel=session.client_channel_id,
         dashboard_channel=session.dashboard_channel_id,
+        aes_iv=(
+            session.aes_iv.encode('base64')
+            if session.aes_iv is not None else None
+        ),
+        validation_code=session.validation_code,
+        encrypted_code=(
+            session.encrypted_code.encode('base64')
+            if session.encrypted_code is not None else None
+        ),
         created_at=session.created_at.isoformat(),
         updated_at=session.updated_at.isoformat(),
         files=[file.guid for file in session.files],

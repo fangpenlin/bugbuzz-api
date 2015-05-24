@@ -4,6 +4,7 @@ import os
 
 import pytest
 from webtest import TestApp
+from webtest import Upload
 
 from bugbuzz_service import main
 from bugbuzz_service import models
@@ -62,6 +63,11 @@ def session2(testapp):
 def encrypted_session(testapp):
     resp = testapp.post(
         '/sessions',
-        dict(encrypted=True),
+        dict(
+            encrypted='true',
+            validation_code='super_foobar',
+            encrypted_code=Upload('encrypted_code', b'encrypted'),
+            aes_iv=Upload('aes_iv', b'0123456789ABCDEF'),
+        ),
     )
     return resp.json['session']

@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from pyramid.httpexceptions import HTTPBadRequest
+from pyramid.settings import asbool
 from pyramid.view import view_config
 
 from ... import models
@@ -17,9 +19,27 @@ class SessionIndexController(ControllerBase):
 
     @view_config(request_method='POST')
     def post(self):
+        encrypted = asbool(self.request.params.get('encrypted', False))
+        kwargs = {}
+        if encrypted:
+            if (
+                'aes_iv' not in self.request.params or
+                'validation_code' not in self.request.params or
+                'encrypted_code' not in self.request.params
+            ):
+                return HTTPBadRequest(
+                    'Need to provide aes_iv, validation_code and '
+                    'encrypted_code for encrypted session'
+                )
+            kwargs['aes_iv'] = self.request.params['aes_iv'].file.read()
+            kwargs['validation_code'] = self.request.params['validation_code']
+            kwargs['encrypted_code'] = (
+                self.request.params['encrypted_code'].file.read()
+            )
         with db_transaction():
             session = models.Session.create(
-                encrypted=self.request.params.get('encrypted', False),
+                encrypted=encrypted,
+                **kwargs
             )
         self.request.response.status = '201 Created'
         return dict(session=session)

@@ -35,8 +35,19 @@ class Session(Base):
     )
 
     @classmethod
-    def create(cls, encrypted=False):
-        session = cls(encrypted=encrypted)
+    def create(
+        cls,
+        encrypted=False,
+        aes_iv=None,
+        validation_code=None,
+        encrypted_code=None,
+    ):
+        session = cls(
+            encrypted=encrypted,
+            aes_iv=aes_iv,
+            validation_code=validation_code,
+            encrypted_code=encrypted_code,
+        )
         DBSession.add(session)
         DBSession.flush()
         return session
