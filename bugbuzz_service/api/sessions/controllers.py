@@ -18,12 +18,8 @@ class SessionIndexController(ControllerBase):
     @view_config(request_method='POST')
     def post(self):
         with db_transaction():
-            try:
-                json_params = self.request.json
-            except ValueError:
-                json_params = {}
             session = models.Session.create(
-                encrypted=json_params.get('encrypted', False)
+                encrypted=self.request.params.get('encrypted', False),
             )
         self.request.response.status = '201 Created'
         return dict(session=session)

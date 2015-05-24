@@ -60,7 +60,7 @@ def session2(testapp):
 
 @pytest.fixture
 def encrypted_session(testapp):
-    resp = testapp.post_json(
+    resp = testapp.post(
         '/sessions',
         dict(encrypted=True),
     )

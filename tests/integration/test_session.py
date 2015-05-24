@@ -9,7 +9,7 @@ def test_create_session(testapp):
 
 
 def test_create_encrypted_session(testapp):
-    resp = testapp.post_json('/sessions', dict(encrypted=True), status=201)
+    resp = testapp.post('/sessions', dict(encrypted=True), status=201)
     assert resp.json['session']['id'].startswith('SE')
     assert resp.json['session']['encrypted']
 
