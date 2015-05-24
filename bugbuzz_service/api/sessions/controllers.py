@@ -7,9 +7,9 @@ from ...db import db_transaction
 from ...renderers import event_adapter
 from ..base import ControllerBase
 from ..base import view_defaults
+from .resources import SessionActionResource
 from .resources import SessionIndexResource
 from .resources import SessionResource
-from .resources import SessionActionResource
 
 
 @view_defaults(context=SessionIndexResource)
@@ -18,7 +18,13 @@ class SessionIndexController(ControllerBase):
     @view_config(request_method='POST')
     def post(self):
         with db_transaction():
-            session = models.Session.create()
+            try:
+                json_params = self.request.json
+            except ValueError:
+                json_params = {}
+            session = models.Session.create(
+                encrypted=json_params.get('encrypted', False)
+            )
         self.request.response.status = '201 Created'
         return dict(session=session)
 

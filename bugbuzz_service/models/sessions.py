@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 
 from sqlalchemy.orm import relationship
 
-from ..db import tables
 from ..db import DBSession
+from ..db import tables
 from .base import Base
 
 
@@ -35,8 +35,8 @@ class Session(Base):
     )
 
     @classmethod
-    def create(cls):
-        session = cls()
+    def create(cls, encrypted=False):
+        session = cls(encrypted=encrypted)
         DBSession.add(session)
         DBSession.flush()
         return session

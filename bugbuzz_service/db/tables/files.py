@@ -1,15 +1,15 @@
 from __future__ import unicode_literals
 
 from sqlalchemy import Column
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
 from sqlalchemy import Table
+from sqlalchemy import Unicode
+from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy.schema import ForeignKey
 
-from ...utils import GUIDFactory
-from .utc_dt import UTCDateTime
 from . import metadata
 from . import now_func
+from ...utils import GUIDFactory
+from .utc_dt import UTCDateTime
 
 
 files = Table(
@@ -27,7 +27,9 @@ files = Table(
     Column('mime_type', Unicode, nullable=False),
     # TODO: save in amazon S3 instead?
     # file content
-    Column('content', UnicodeText, nullable=False),
+    Column('content', BYTEA, nullable=False),
+    # AES 256 encryption IV
+    Column('aes_iv', BYTEA),
     # TODO: add a hash column for querying files?
     Column('created_at', UTCDateTime, default=now_func),
     Column(

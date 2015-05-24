@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
+
 import os
 
 import pytest
 from webtest import TestApp
 
 from bugbuzz_service import main
-from bugbuzz_service.db.tables import metadata
-from bugbuzz_service.db import DBSession
 from bugbuzz_service import models
+from bugbuzz_service.db import DBSession
+from bugbuzz_service.db.tables import metadata
 
 
 @pytest.yield_fixture
@@ -53,5 +54,14 @@ def session(testapp):
 def session2(testapp):
     resp = testapp.post(
         '/sessions',
+    )
+    return resp.json['session']
+
+
+@pytest.fixture
+def encrypted_session(testapp):
+    resp = testapp.post_json(
+        '/sessions',
+        dict(encrypted=True),
     )
     return resp.json['session']

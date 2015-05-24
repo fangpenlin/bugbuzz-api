@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.view import view_config
 
 from ... import models
@@ -17,12 +18,20 @@ class BreakIndexController(ControllerBase):
     @view_config(request_method='POST')
     def post(self):
         with db_transaction():
-            file_ = models.File.query.get(self.request.json['file_id'])
+            aes_iv = None
+            if 'aes_iv' in self.request.params:
+                aes_iv = self.request.params['aes_iv'].file.read()
+            if self.context.entity.encrypted and aes_iv is None:
+                return HTTPBadRequest(
+                    'Need to provide aes_iv for encrypted session'
+                )
+            file_ = models.File.query.get(self.request.params['file_id'])
             break_ = models.Break.create(
                 session=self.context.entity,
                 file_=file_,
-                lineno=self.request.json['lineno'],
-                local_vars=self.request.json['local_vars'],
+                lineno=self.request.params['lineno'],
+                local_vars=self.request.params['local_vars'].file.read(),
+                aes_iv=aes_iv,
             )
         self.publish_event(
             break_.session.dashboard_channel_id,

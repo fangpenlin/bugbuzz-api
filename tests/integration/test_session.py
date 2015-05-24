@@ -8,6 +8,12 @@ def test_create_session(testapp):
     assert resp.json['session']['id'].startswith('SE')
 
 
+def test_create_encrypted_session(testapp):
+    resp = testapp.post_json('/sessions', dict(encrypted=True), status=201)
+    assert resp.json['session']['id'].startswith('SE')
+    assert resp.json['session']['encrypted']
+
+
 def test_get_session(testapp, session):
     resp = testapp.get('/sessions/{}'.format(session['id']))
     assert resp.json == dict(session=session)

@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import json
+
 from webtest import Upload
 
 
@@ -15,25 +17,78 @@ def test_create_break(testapp, session):
     )
     file_id = resp.json['file']['id']
 
-    resp = testapp.post_json(
+    resp = testapp.post(
         '/sessions/{}/breaks'.format(sid),
         dict(
-            lineno=123,
+            lineno='123',
             file_id=file_id,
-            local_vars=dict(
+            local_vars=Upload('local_vars', json.dumps(dict(
                 foo='bar',
                 eggs='spam',
-            ),
+            ))),
         ),
         status=201,
     )
     assert resp.json['break']['id'].startswith('BK')
     assert resp.json['break']['file'] == file_id
     assert resp.json['break']['lineno'] == 123
-    assert resp.json['break']['local_vars'] == dict(
+    local_vars = json.loads(resp.json['break']['local_vars'].decode('base64'))
+    assert local_vars == dict(
         foo='bar',
         eggs='spam',
     )
+
+
+def test_create_encrypted_break_without_iv(testapp, encrypted_session):
+    sid = encrypted_session['id']
+    resp = testapp.post(
+        '/sessions/{}/files'.format(sid),
+        dict(
+            file=Upload('foobar.py', b'print 123'),
+            aes_iv=Upload('aes_iv', b'0123456789ABCDEF'),
+        ),
+        status=201,
+    )
+    file_id = resp.json['file']['id']
+    testapp.post(
+        '/sessions/{}/breaks'.format(sid),
+        dict(
+            lineno='123',
+            file_id=file_id,
+            local_vars=Upload('local_vars', json.dumps(dict(
+                foo='bar',
+                eggs='spam',
+            ))),
+        ),
+        status=400,
+    )
+
+
+def test_create_encrypted_break(testapp, encrypted_session):
+    sid = encrypted_session['id']
+    resp = testapp.post(
+        '/sessions/{}/files'.format(sid),
+        dict(
+            file=Upload('foobar.py', b'print 123'),
+            aes_iv=Upload('aes_iv', b'0123456789ABCDEF'),
+        ),
+        status=201,
+    )
+    file_id = resp.json['file']['id']
+    resp = testapp.post(
+        '/sessions/{}/breaks'.format(sid),
+        dict(
+            lineno='123',
+            file_id=file_id,
+            local_vars=Upload('local_vars', json.dumps(dict(
+                foo='bar',
+                eggs='spam',
+            ))),
+            aes_iv=Upload('aes_iv', b'0123456789ABCDEF'),
+        ),
+        status=201,
+    )
+    assert resp.json['break']['aes_iv'].decode('base64') == b'0123456789ABCDEF'
 
 
 def test_get_break(testapp, session):
@@ -48,15 +103,15 @@ def test_get_break(testapp, session):
     )
     file_id = resp.json['file']['id']
 
-    resp = testapp.post_json(
+    resp = testapp.post(
         '/sessions/{}/breaks'.format(sid),
         dict(
-            lineno=123,
+            lineno='123',
             file_id=file_id,
-            local_vars=dict(
+            local_vars=Upload('local_vars', json.dumps(dict(
                 foo='bar',
                 eggs='spam',
-            ),
+            ))),
         ),
         status=201,
     )
