@@ -10,11 +10,12 @@ dependencies:
   override:
     - 'easy_install -U setuptools'
     - 'pip install -U pip'
+    - 'pip install wheel'
     - 'pip install psycopg2'
     - 'pip install -e .[tests]'
 
 test:
   override:
     - 'py.test -svvv --cov-report term-missing --cov bugbuzz tests'
-    - 'pip install flake8 --use-mirrors'
+    - 'pip install flake8'
     - 'flake8 bugbuzz_service --ignore=E501,W293'
