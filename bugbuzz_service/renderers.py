@@ -54,7 +54,7 @@ def file_adapter(file_, request):
         session=file_.session.guid,
         filename=file_.filename,
         mime_type=file_.mime_type,
-        content=file_.content.encode('utf8').encode('base64'),
+        content=file_.content.encode('base64'),
         aes_iv=(
             file_.aes_iv.encode('base64')
             if file_.aes_iv is not None else None
