@@ -1,5 +1,4 @@
-from __future__ import unicode_literals
-
+import base64
 import json
 
 from webtest import Upload
@@ -25,14 +24,14 @@ def test_create_break(testapp, session):
             local_vars=Upload('local_vars', json.dumps(dict(
                 foo='bar',
                 eggs='spam',
-            ))),
+            )).encode('utf8')),
         ),
         status=201,
     )
     assert resp.json['break']['id'].startswith('BK')
     assert resp.json['break']['file'] == file_id
     assert resp.json['break']['lineno'] == 123
-    local_vars = json.loads(resp.json['break']['local_vars'].decode('base64'))
+    local_vars = json.loads(base64.b64decode(resp.json['break']['local_vars']))
     assert local_vars == dict(
         foo='bar',
         eggs='spam',

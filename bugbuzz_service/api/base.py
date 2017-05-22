@@ -33,7 +33,8 @@ class ControllerBase(object):
         pnconfig.publish_key = self.settings['pubnub.subscribe_key']
         # TODO: move to base controller?
         pubnub = PubNub(pnconfig)
-        return pubnub.publish().channel(channel).message(event).sync()
+        # XXX: fix this
+        #return pubnub.publish().channel(channel).message(event).sync()
 
 
 view_defaults = functools.partial(view.view_defaults, renderer='json')

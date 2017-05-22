@@ -48,7 +48,7 @@ def break_adapter(break_, request):
         session=break_.session.guid,
         file=break_.file.guid,
         lineno=break_.lineno,
-        local_vars=break_.local_vars.encode('base64').decode('ascii'),
+        local_vars=base64.b64encode(break_.local_vars).decode('ascii'),
         aes_iv=(
             base64.b64encode(break_.aes_iv).decode('ascii')
             if break_.aes_iv is not None else None
