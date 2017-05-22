@@ -66,7 +66,7 @@ def file_adapter(file_, request):
         mime_type=file_.mime_type,
         content=base64.b64encode(file_.content).decode('ascii'),
         aes_iv=(
-            base64.b64encode(file_.aes_iv)
+            base64.b64encode(file_.aes_iv).decode('ascii')
             if file_.aes_iv is not None else None
         ),
         created_at=file_.created_at.isoformat(),

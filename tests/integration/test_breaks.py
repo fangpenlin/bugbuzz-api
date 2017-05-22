@@ -57,7 +57,7 @@ def test_create_encrypted_break_without_iv(testapp, encrypted_session):
             local_vars=Upload('local_vars', json.dumps(dict(
                 foo='bar',
                 eggs='spam',
-            ))),
+            )).encode('utf8')),
         ),
         status=400,
     )
