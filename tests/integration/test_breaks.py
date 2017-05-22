@@ -82,12 +82,12 @@ def test_create_encrypted_break(testapp, encrypted_session):
             local_vars=Upload('local_vars', json.dumps(dict(
                 foo='bar',
                 eggs='spam',
-            ))),
+            )).encode('utf8')),
             aes_iv=Upload('aes_iv', b'0123456789ABCDEF'),
         ),
         status=201,
     )
-    assert resp.json['break']['aes_iv'].decode('base64') == b'0123456789ABCDEF'
+    assert base64.b64decode(resp.json['break']['aes_iv']) == b'0123456789ABCDEF'
 
 
 def test_get_break(testapp, session):
@@ -110,7 +110,7 @@ def test_get_break(testapp, session):
             local_vars=Upload('local_vars', json.dumps(dict(
                 foo='bar',
                 eggs='spam',
-            ))),
+            )).encode('utf8')),
         ),
         status=201,
     )

@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import urllib
+import urllib.parse
 
 
 def test_event_reading(testapp, session, session2):
@@ -17,7 +17,9 @@ def test_event_reading(testapp, session, session2):
     def get_events(last_timestamp):
         return testapp.get(
             '/sessions/{}/events?{}'
-            .format(sid, urllib.urlencode(dict(last_timestamp=last_timestamp)))
+            .format(sid, urllib.parse.urlencode(
+                dict(last_timestamp=last_timestamp))
+            )
         )
 
     resp = get_events(created_events[0]['created_at'])

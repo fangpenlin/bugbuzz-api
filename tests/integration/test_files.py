@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+import base64
 
 from webtest import Upload
 
@@ -14,7 +14,7 @@ def test_create_file(testapp, session):
     )
     assert resp.json['file']['id'].startswith('FL')
     assert resp.json['file']['filename'] == 'foobar.py'
-    assert resp.json['file']['content'].decode('base64') == 'print 123'
+    assert base64.b64decode(resp.json['file']['content']) == b'print 123'
 
 
 def test_create_encrypted_file_without_iv(testapp, encrypted_session):
@@ -40,8 +40,8 @@ def test_create_encrypted_file(testapp, encrypted_session):
     )
     assert resp.json['file']['id'].startswith('FL')
     assert resp.json['file']['filename'] == 'foobar.py'
-    assert resp.json['file']['content'].decode('base64') == b'print 123'
-    assert resp.json['file']['aes_iv'].decode('base64') == b'0123456789ABCDEF'
+    assert base64.b64decode(resp.json['file']['content']) == b'print 123'
+    assert base64.b64decode(resp.json['file']['aes_iv']) == b'0123456789ABCDEF'
 
 
 def test_get_file(testapp, session):

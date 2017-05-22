@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+import base64
 
 import pytest
 from webtest import Upload
@@ -24,7 +24,7 @@ def test_create_encrypted_session(testapp):
     assert resp.json['session']['id'].startswith('SE')
     assert resp.json['session']['encrypted']
     assert (
-        resp.json['session']['aes_iv'].decode('base64') == b'0123456789ABCDEF'
+        base64.b64decode(resp.json['session']['aes_iv']) == b'0123456789ABCDEF'
     )
     assert resp.json['session']['validation_code'] == validation_code
 
