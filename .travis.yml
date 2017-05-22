@@ -1,0 +1,14 @@
+language: python
+python:
+  - '3.6'
+# command to install dependencies
+install:
+  - 'easy_install -U setuptools'
+  - 'pip install -U pip'
+  - 'pip install wheel'
+# command to run tests
+script:
+  - 'pip install -e.[tests]'
+  - 'py.test'
+  - 'pip install flake8'
+  - 'flake8 bugbuzz_service --ignore=E501,W293'
