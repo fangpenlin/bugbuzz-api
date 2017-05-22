@@ -38,7 +38,7 @@ setup(
         'click>=3.3,<4.0',
         'pytz>=2014.10,<2015',
         'alembic>=0.7,<0.8',
-        'psycopg2>=2.6,<2.7',
+        'psycopg2>=2.7,<2.8',
         'pyramid-handy>=0.1.1,<0.2',
         'dateutils',
         'paste>=2.0.1,<2.1',  # for dev translogger only
