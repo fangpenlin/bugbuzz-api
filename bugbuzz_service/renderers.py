@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import base64
 
 from pyramid.renderers import JSON
 from pyramid.settings import asbool
@@ -16,12 +17,12 @@ def session_adapter(session, request):
         client_channel=session.client_channel_id,
         dashboard_channel=session.dashboard_channel_id,
         aes_iv=(
-            session.aes_iv.encode('base64')
+            base64.b64encode(session.aes_iv).decode('ascii')
             if session.aes_iv is not None else None
         ),
         validation_code=session.validation_code,
         encrypted_code=(
-            session.encrypted_code.encode('base64')
+            base64.b64encode(session.encrypted_code).decode('ascii')
             if session.encrypted_code is not None else None
         ),
         created_at=session.created_at.isoformat(),
@@ -47,9 +48,9 @@ def break_adapter(break_, request):
         session=break_.session.guid,
         file=break_.file.guid,
         lineno=break_.lineno,
-        local_vars=break_.local_vars.encode('base64'),
+        local_vars=break_.local_vars.encode('base64').decode('ascii'),
         aes_iv=(
-            break_.aes_iv.encode('base64')
+            base64.b64encode(break_.aes_iv).decode('ascii')
             if break_.aes_iv is not None else None
         ),
         created_at=break_.created_at.isoformat(),
@@ -63,9 +64,9 @@ def file_adapter(file_, request):
         session=file_.session.guid,
         filename=file_.filename,
         mime_type=file_.mime_type,
-        content=file_.content.encode('base64'),
+        content=base64.b64encode(file_.content).decode('ascii'),
         aes_iv=(
-            file_.aes_iv.encode('base64')
+            base64.b64encode(file_.aes_iv)
             if file_.aes_iv is not None else None
         ),
         created_at=file_.created_at.isoformat(),

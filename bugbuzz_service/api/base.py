@@ -26,13 +26,14 @@ class ControllerBase(object):
         import socket
         socket.TCP_KEEPINTVL = 0x101
         socket.TCP_KEEPCNT = 0x102
-        from Pubnub import Pubnub
+        from pubnub.pnconfiguration import PNConfiguration
+        from pubnub.pubnub import PubNub
+        pnconfig = PNConfiguration()
+        pnconfig.subscribe_key = self.settings['pubnub.publish_key']
+        pnconfig.publish_key = self.settings['pubnub.subscribe_key']
         # TODO: move to base controller?
-        pubnub = Pubnub(
-            publish_key=self.settings['pubnub.publish_key'],
-            subscribe_key=self.settings['pubnub.subscribe_key'],
-        )
-        return pubnub.publish(channel, event)
+        pubnub = PubNub(pnconfig)
+        return pubnub.publish().channel(channel).message(event).sync()
 
 
 view_defaults = functools.partial(view.view_defaults, renderer='json')

@@ -18,7 +18,7 @@ def database(settings=None):
     app_settings = settings.copy()
     db_url = os.environ.get(
         'TEST_DB',
-        'postgres://bugbuzz:bugbuzz@127.0.0.1/bugbuzz_test',
+        'postgres://bugbuzz@127.0.0.1/bugbuzz_test',
     )
     app_settings['sqlalchemy.url'] = db_url
     app_settings = models.setup_database({}, **app_settings)

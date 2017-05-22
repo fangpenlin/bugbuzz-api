@@ -11,9 +11,11 @@ B58_BASE = len(B58_CHARS)
 
 
 def b58encode(s):
+    if not isinstance(s, bytes):
+        raise TypeError('s should be bytes')
     value = 0
     for i, c in enumerate(reversed(s)):
-        value += ord(c) * (256 ** i)
+        value += c * (256 ** i)
 
     result = []
     while value >= B58_BASE:
